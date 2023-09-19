@@ -1,6 +1,7 @@
 const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
+const contentArea = $("#contentArea");
 
 let userInput = "";
 
@@ -22,6 +23,8 @@ function authorSearch(url) {
 
             let authorTitles = [];
 
+            if (data.status == 404) throw "Author not found";
+
             for (let i = 0; i < data.length; i++) {
                 authorTitles.push(data[i].title);
               }
@@ -31,6 +34,12 @@ function authorSearch(url) {
                 currentName.innerHTML = authorTitles[i];
                 $("#contentArea").append(currentName);
               }
+        })
+        .catch(function (error) {
+            let notFound = document.createElement("p");
+            notFound.innerHTML = "Author not found";
+            $("#contentArea").append(notFound);
+            console.log(error);
         })
 }
 
@@ -43,6 +52,7 @@ $(searchButton).on("click", function(event) {
     let trimmedAuthor = searchAuthorApi.split(" ").join("%20");
     console.log(trimmedAuthor);
 
+    contentArea.empty();
     authorSearch(trimmedAuthor);
 })
 // CREDIT: solution for replacing blank spaces using split and join: https://www.geeksforgeeks.org/how-to-remove-spaces-from-a-string-using-javascript/
@@ -75,6 +85,8 @@ function getAuthorList(url) {
 // Author List button 
 $(generateAuthorList).on("click", function(event) {
     event.preventDefault();
+
+    contentArea.empty();
     getAuthorList(authorsApi);
 })
 
