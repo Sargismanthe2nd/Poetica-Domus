@@ -2,7 +2,7 @@ const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
 const contentArea = $("#contentArea");
-const clickable = $(".clickable");
+// const clickable = $(".clickable");
 
 let userInput = "";
 let clickableClicked = "";
@@ -14,7 +14,7 @@ let clickableClicked = "";
 
 let currentPoemSearch = "https://poetrydb.org/title/" + clickableClicked;
 
-$(clickable).on("click", function(event) {
+contentArea.on("click", function(event) {
     event.preventDefault();
     console.log("good");
 
