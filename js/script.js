@@ -2,11 +2,30 @@ const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
 const contentArea = $("#contentArea");
+const clickable = $(".clickable");
 
 let userInput = "";
+let clickableClicked = "";
 
 
 // ------------POETRY API------------
+
+// -------------- Poem Loading -----------------
+
+let currentPoemSearch = "https://poetrydb.org/title/" + clickableClicked;
+
+$(clickable).on("click", function(event) {
+    event.preventDefault();
+    console.log("good");
+
+    // let searchAuthorApi = 'https://poetrydb.org/author/' + userInput;
+    // let trimmedAuthor = searchAuthorApi.split(" ").join("%20");
+    // console.log(trimmedAuthor);
+
+    // contentArea.empty();
+    // authorSearch(trimmedAuthor);
+})
+
 
 // -------------- Poet Search -----------------
 
@@ -32,6 +51,7 @@ function authorSearch(url) {
             for (let i = 0; i < data.length; i++) {
                 let currentName = document.createElement("p");
                 currentName.innerHTML = authorTitles[i];
+                $(currentName).addClass("clickable")
                 $("#contentArea").append(currentName);
               }
         })
