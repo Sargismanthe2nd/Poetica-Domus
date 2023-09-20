@@ -2,7 +2,7 @@ const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
 const contentArea = $("#contentArea");
-// const clickable = $(".clickable");
+const clickable = $("button");
 
 let userInput = "";
 let clickableClicked = "";
@@ -10,22 +10,55 @@ let clickableClicked = "";
 
 // ------------POETRY API------------
 
-// -------------- Poem Loading -----------------
+// --------------------- Clicking on a Poem Title ----------------------------
 
-let currentPoemSearch = "https://poetrydb.org/title/" + clickableClicked;
+// Clicking on a poem title
+function onClick() {
 
-contentArea.on("click", function(event) {
-    event.preventDefault();
-    console.log("good");
+        clickableClicked = this.innerHTML;
+        let trimmedTitle = clickableClicked.split(" ").join("%20");
+        let currentPoemSearch = "https://poetrydb.org/title/" + trimmedTitle;
+        console.log(currentPoemSearch);
 
-    // let searchAuthorApi = 'https://poetrydb.org/author/' + userInput;
-    // let trimmedAuthor = searchAuthorApi.split(" ").join("%20");
-    // console.log(trimmedAuthor);
+        contentArea.empty();
+        loadPoem(currentPoemSearch);
+}
 
-    // contentArea.empty();
-    // authorSearch(trimmedAuthor);
-})
+// generating poem title content
+// function loadPoem(url) {
 
+//     fetch(url)
+//         .then(function (response) {
+//             return response.json();
+//          })
+//         .then(function (data) {
+
+//             console.log(data);
+
+//             let authorTitles = [];
+
+//             if (data.status == 404) throw "Author not found";
+
+//             for (let i = 0; i < data.length; i++) {
+//                 authorTitles.push(data[i].title);
+//               }
+//                 let currentName ;
+//             for (let i = 0; i < data.length; i++) {
+//                 currentName = document.createElement("button");
+//                 currentName.textContent = authorTitles[i];
+//                 $(currentName).addClass("clickable");
+//                 $(currentName).on("click", onClick);
+//                 $("#contentArea").append(currentName);
+//               }
+//         })
+//         .catch(function (error) {
+//             let notFound = document.createElement("p");
+//             notFound.innerHTML = "Author not found";
+//             $("#contentArea").append(notFound);
+//             console.log(error);
+//         })
+
+// }
 
 // -------------- Poet Search -----------------
 
@@ -37,7 +70,6 @@ function authorSearch(url) {
          })
         .then(function (data) {
 
-            let authorPoems = data.title;
             console.log(data);
 
             let authorTitles = [];
@@ -47,11 +79,12 @@ function authorSearch(url) {
             for (let i = 0; i < data.length; i++) {
                 authorTitles.push(data[i].title);
               }
-
+                let currentName ;
             for (let i = 0; i < data.length; i++) {
-                let currentName = document.createElement("p");
-                currentName.innerHTML = authorTitles[i];
-                $(currentName).addClass("clickable")
+                currentName = document.createElement("button");
+                currentName.textContent = authorTitles[i];
+                $(currentName).addClass("clickable");
+                $(currentName).on("click", onClick);
                 $("#contentArea").append(currentName);
               }
         })
@@ -112,8 +145,8 @@ $(generateAuthorList).on("click", function(event) {
 
 // -----------------
 
-// https://poetrydb.org/index.html
 
+// https://poetrydb.org/index.html
 
 
 
