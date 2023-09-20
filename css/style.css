@@ -1,9 +1,59 @@
-.clickable:hover {
-    color: green;
-    cursor: pointer;
+
+/* ------------------- JS RELATED CLASSES AND IDS ------------------- */
+
+/* Input box for user to enter search terms */
+#input {
+
 }
 
-.poetListName:hover {
-    color: blue;
+/* Search button - click to submit #input into api call */
+#search {
+
+}
+
+/* Button id, on click lists available authors */
+#generateAuthorList {
+
+}
+
+/* Main box where poems, titles, and author content appears */
+#contentArea {
+
+}
+
+/* for generated author list names */
+.poemListName {
+
+}
+
+/* loaded title of a poem during list of author's works*/
+.poemTitle {
+
+}
+
+/* title loaded to content area when a poem is selected */
+.contentTitle {
+
+}
+
+/* author loaded to content area when a poem is selected */
+.contentAuthor {
+
+}
+
+/* poem lines loaded to content area when a poem is selected */
+.poemLine {
+
+}
+
+/* link to wikipedia article that is generated at the bottom of the page */
+.wikiLink {
+
+}
+
+/* On Hover */
+
+.poemTitle:hover {
+    color: green;
     cursor: pointer;
 }
