@@ -6,6 +6,7 @@ const clickable = $("button");
 
 let userInput = "";
 let clickableClicked = "";
+let wikiButton = "";
 
 
 // ------------POETRY API------------
@@ -38,6 +39,8 @@ function loadPoem(url) {
 
             if (data.status == 404) throw "Author not found";
 
+            let wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search=' + data[0].author + '&formatversion=2&limit=1';
+
             let contentTitle = $("<h3></h3>").text(data[0].title)
             $(contentTitle).addClass("contentTitle");
             $("#contentArea").append(contentTitle);
@@ -52,10 +55,8 @@ function loadPoem(url) {
                 $("#contentArea").append(poemLine);
               }
 
-            let wikiButton = $("<button></button>").text("Click for more info on " + data[0].author)
-            $(wikiButton).addClass("wikiButton");
-            $(currentName).on("click", wikiApiCall(data[0].author));
-            $("#contentArea").append(wikiButton);
+            wikiApiCall(wikiUrl);
+
         })
         .catch(function (error) {
             let notFound = document.createElement("p");
@@ -67,6 +68,21 @@ function loadPoem(url) {
 
 // Opens wikipedia article in new tab
 function wikiApiCall(url) {
+
+    fetch(url)
+        .then(function (response) {
+            return response.json();
+         })
+        .then(function (data) {
+            
+            console.log(data[3][0]);
+            let wikiButton = $('<a href="" target="_blank"</a>').text("Click for more info on this Author")
+            $(wikiButton).addClass("wikiButton");
+            $("#contentArea").append(wikiButton);
+            $(wikiButton).attr("href", data[3][0]);
+            console.log(wikiButton);
+
+        })
 
 }
 
