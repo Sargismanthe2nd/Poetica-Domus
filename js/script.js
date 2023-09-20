@@ -25,40 +25,53 @@ function onClick() {
 }
 
 // generating poem title content
-// function loadPoem(url) {
+function loadPoem(url) {
 
-//     fetch(url)
-//         .then(function (response) {
-//             return response.json();
-//          })
-//         .then(function (data) {
+    fetch(url)
+        .then(function (response) {
+            return response.json();
+         })
+        .then(function (data) {
 
-//             console.log(data);
+            console.log(data);
+            console.log(data[0].title);
 
-//             let authorTitles = [];
+            if (data.status == 404) throw "Author not found";
 
-//             if (data.status == 404) throw "Author not found";
+            let contentTitle = $("<h3></h3>").text(data[0].title)
+            $(contentTitle).addClass("contentTitle");
+            $("#contentArea").append(contentTitle);
 
-//             for (let i = 0; i < data.length; i++) {
-//                 authorTitles.push(data[i].title);
-//               }
-//                 let currentName ;
-//             for (let i = 0; i < data.length; i++) {
-//                 currentName = document.createElement("button");
-//                 currentName.textContent = authorTitles[i];
-//                 $(currentName).addClass("clickable");
-//                 $(currentName).on("click", onClick);
-//                 $("#contentArea").append(currentName);
-//               }
-//         })
-//         .catch(function (error) {
-//             let notFound = document.createElement("p");
-//             notFound.innerHTML = "Author not found";
-//             $("#contentArea").append(notFound);
-//             console.log(error);
-//         })
+            let contentAuthor = $("<h5></h5>").text(data[0].author)
+            $(contentAuthor).addClass("contentAuthor");
+            $("#contentArea").append(contentAuthor);
 
-// }
+            for (let i = 0; i < data[0].lines.length; i++) {
+                let poemLine = $("<p></p>").text(data[0].lines[i])
+                $(poemLine).addClass("poemLine");
+                $("#contentArea").append(poemLine);
+              }
+        })
+
+        .catch(function (error) {
+            let notFound = document.createElement("p");
+            notFound.innerHTML = "Poem not found";
+            $("#contentArea").append(notFound);
+            console.log(error);
+        })
+}
+
+function createAuthor(data) {
+    let contentAuthor = $("<h5></h5>").text(data[0].author)
+    $("#contentArea").append(contentAuthor);
+}
+
+function createTitle(data) {
+    let contentTitle = $("<h3></h3>").text(data[0].title)
+    $("#contentArea").append(contentTitle);
+}
+
+// .author .title .lines
 
 // -------------- Poet Search -----------------
 
