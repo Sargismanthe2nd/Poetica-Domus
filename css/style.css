@@ -2,3 +2,8 @@
     color: green;
     cursor: pointer;
 }
+
+.poetListName:hover {
+    color: blue;
+    cursor: pointer;
+}

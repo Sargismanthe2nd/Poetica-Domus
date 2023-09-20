@@ -74,7 +74,7 @@ function wikiApiCall(url) {
             return response.json();
          })
         .then(function (data) {
-            
+
             console.log(data[3][0]);
             let wikiButton = $('<a href="" target="_blank"</a>').text("Click for more info on this Author")
             $(wikiButton).addClass("wikiButton");
@@ -105,13 +105,13 @@ function authorSearch(url) {
             for (let i = 0; i < data.length; i++) {
                 authorTitles.push(data[i].title);
               }
-                let currentName ;
+                let currentTitle ;
             for (let i = 0; i < data.length; i++) {
-                currentName = document.createElement("button");
-                currentName.textContent = authorTitles[i];
-                $(currentName).addClass("clickable");
-                $(currentName).on("click", onClick);
-                $("#contentArea").append(currentName);
+                currentTitle = document.createElement("p");
+                currentTitle.textContent = authorTitles[i];
+                $(currentTitle).addClass("clickable");
+                $(currentTitle).on("click", onClick);
+                $("#contentArea").append(currentTitle);
               }
         })
         .catch(function (error) {
@@ -128,6 +128,7 @@ $(searchButton).on("click", function(event) {
     userInput = searchText.val();
 
     let searchAuthorApi = 'https://poetrydb.org/author/' + userInput;
+    console.log(searchAuthorApi);
     let trimmedAuthor = searchAuthorApi.split(" ").join("%20");
     console.log(trimmedAuthor);
 
@@ -151,15 +152,29 @@ function getAuthorList(url) {
             console.log(data);
 
             let authorName = data.authors;
-            console.log(authorName);
+            let currentName ;
 
             for (let i = 0; i < authorName.length; i++) {
-                let currentName = document.createElement("p");
-                currentName.innerHTML = authorName[i];
+                currentName = document.createElement("p");
+                currentName.textContent = authorName[i];
+                $(currentName).addClass("poetListName");
                 $("#contentArea").append(currentName);
               }
         })
 }
+
+
+// // click on author list name and go to their works
+// function authorClick() {
+
+//     listClicked = this.innerHTML;
+//     let authorClickSearch = "https://poetrydb.org/author/" + listClicked;
+//     let trimmedAuthorClick = authorClickSearch.split(" ").join("%20");
+//     console.log(trimmedAuthorClick);
+
+//     // contentArea.empty();
+//     // authorSearch(trimmedAuthorClick);
+// }
 
 // Author List button 
 $(generateAuthorList).on("click", function(event) {
@@ -168,6 +183,7 @@ $(generateAuthorList).on("click", function(event) {
     contentArea.empty();
     getAuthorList(authorsApi);
 })
+
 
 // -----------------
 
