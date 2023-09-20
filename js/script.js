@@ -12,7 +12,7 @@ let clickableClicked = "";
 
 // --------------------- Clicking on a Poem Title ----------------------------
 
-// Clicking on a poem title
+// Clicking on a poem title ->
 function onClick() {
 
         clickableClicked = this.innerHTML;
@@ -24,7 +24,7 @@ function onClick() {
         loadPoem(currentPoemSearch);
 }
 
-// generating poem title content
+// <- generates poem content
 function loadPoem(url) {
 
     fetch(url)
@@ -51,8 +51,12 @@ function loadPoem(url) {
                 $(poemLine).addClass("poemLine");
                 $("#contentArea").append(poemLine);
               }
-        })
 
+            let wikiButton = $("<button></button>").text("Click for more info on " + data[0].author)
+            $(wikiButton).addClass("wikiButton");
+            $(currentName).on("click", wikiApiCall(data[0].author));
+            $("#contentArea").append(wikiButton);
+        })
         .catch(function (error) {
             let notFound = document.createElement("p");
             notFound.innerHTML = "Poem not found";
@@ -61,17 +65,10 @@ function loadPoem(url) {
         })
 }
 
-function createAuthor(data) {
-    let contentAuthor = $("<h5></h5>").text(data[0].author)
-    $("#contentArea").append(contentAuthor);
-}
+// Opens wikipedia article in new tab
+function wikiApiCall(url) {
 
-function createTitle(data) {
-    let contentTitle = $("<h3></h3>").text(data[0].title)
-    $("#contentArea").append(contentTitle);
 }
-
-// .author .title .lines
 
 // -------------- Poet Search -----------------
 
