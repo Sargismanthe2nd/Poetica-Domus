@@ -2,13 +2,14 @@
     padding: 0;
     margin: 0;
 }
+
 body {
-background-color: #222222;
-font-family: 'Times New Roman', Times, serif;
-color: white;
+    background-color: #222222;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
 }
-/* Reset some default styles */
-body, ul {
+
+ul {
     margin: 0;
     padding: 0;
 }
@@ -25,10 +26,12 @@ body, ul {
     border-radius: 20px;
     margin: 2px;
 }
+
 #logo {
     width: 100px;
     height: 100px;
 }
+
 .navbar-brand a {
     text-decoration: none;
     color: #fff;
@@ -49,35 +52,7 @@ body, ul {
     width: 400px;
 }
 
-.navbar-search button {
-    background-color: #555;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
 
-.navbar-menu {
-    list-style: none;
-    display: flex;
-}
-
-.navbar-menu li {
-    margin-right: 20px;
-}
-
-.navbar-menu li a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-}
-
-/* Style the search input on focus */
-.navbar-search input[type="text"]:focus {
-    outline: none;
-    box-shadow: 0 0 5px rgb(95, 0, 0); /* Change the color as needed */
-}
 .favorites {
     background-color: #333333;
     width: 400px;
@@ -87,12 +62,39 @@ body, ul {
     border-radius: 20px;
     margin: 2px;
 }
+
 #favorite-items {
     border: 3px, rgb(63, 0, 0);
     padding: 4px;
     width: 200px;
     height: 40px;
+    position: relative;
 }
+
+h1 {
+    text-align: center;
+    color: lightgray;
+    padding: 4px;
+}
+
+#fav-boxes {}
+
+.box {
+    position: relative;
+}
+
+#fav-button {
+    width: 40px;
+    height: 40px;
+    aspect-ratio: 1;
+    position: absolute;
+    border-radius: 50%;
+    right: -1px;
+    top: 0px;
+    background-color: rgb(63, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
 
 /* Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) { 
@@ -116,17 +118,17 @@ display: none;
 @media (min-width: 1200px) {
 // Havent code only get for more informations 
  } */
- 
+
 li {
     display: inline-block;
     width: 300px;
     height: 40px;
-    border: 2px solid #000000;   
+    border: 2px solid #000000;
     margin: 5px;
     margin-left: 40px;
     border-radius: 20px;
     background-color: lightgray;
-    color:#000000;
+    color: #000000;
     text-align: center;
     font-size: 30px;
 }

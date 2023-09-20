@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
     <nav class="navbar">
         <div class="navbar-brand">
@@ -17,23 +19,40 @@
             <button type="submit">Search</button>
         </div>
         <ul class="navbar-menu">
-            
+
         </ul>
     </nav>
     <div class="favorites">
+        <h1> Favorites</h1>
         <div id="favorite-items">
             <ul id="fav-boxes">
-                <li>Edgar Allen Poe</li>
-                <li>Sun Tzu</li>
-                <li>Robert Frost</li>
+                <li class="box">
+                    <div class="box">
+                        <p class="fav-poet">Edgar</p>
+                        <button id="fav-button">★</button>
+                    </div>
+                </li>
+                <li>
+                    <div class="box">
+                        <p class="fav-poet">Frost</p>
+                        <button id="fav-button">★</button>
+                    </div>
+                </li>
+                <li>
+                    <div class="box">
+                        <p class="fav-poet">Szu</p>
+                        <button id="fav-button">★</button>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
-       
 </body>
+
 </html>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./js/script.js"></script>
 </body>
+
 </html>
