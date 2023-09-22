@@ -16,6 +16,12 @@ let userInput = "";
 let clickableClicked = "";
 let wikiButton = "";
 
+// Used for favorites button
+let currentTitle = "";
+let currentAuthor = "";
+let favoriteList = [];
+let viewedHistory = [];
+
 
 // -------------- Author List -----------------
 
@@ -75,6 +81,22 @@ function onClick() {
     loadPoem(currentPoemSearch);
 }
 
+// Used for favorites button generation
+function saveToFavorites() {
+    let favorited = $("<p></p>").text(currentTitle + " by " + currentAuthor)
+    $(favorited).addClass("favoriteItem");
+    $("#favorite-items").append(favorited);
+    favoriteList.push(favorited);
+    storeFavorite(favoriteList);
+    loadFavorites();
+}
+
+function storeFavorite(list) {
+    localStorage.setItem("favorites", JSON.stringify(list));
+}
+
+function loadFavorites();
+
 // authorSearch is an api call and is the most complex of the api calls
 // it has a throw and catch is the searched author is not found
 // First for loop fills up authorTitles with the title of each work the searched author has created
@@ -128,7 +150,6 @@ $(searchButton).on("click", function(event) {
 // CREDIT: solution for replacing blank spaces using split and join: https://www.geeksforgeeks.org/how-to-remove-spaces-from-a-string-using-javascript/
 // CREDIT: solution to replacing spaces with a specific string: http://dotnet-concept.com/Tips/2015/3/5798821/How-to-replace-Space-with-Dash-or-Underscore-in-JQuery
 
-
 // --------------------- Click on a Generated Poem Title from the Search Function to Load that Poem----------------------------
 
 // loadPoem takes a url input for an api call to search for a specific poem and load it to the contentArea
@@ -170,6 +191,15 @@ function loadPoem(url) {
               }
 
             wikiApiCall(wikiUrl);
+
+            // favorites / history
+
+            let favoritesButton = $('<button class="favoritesButton"></button>').text("Add to Favorites!")
+            $(favoritesButton).on("click", saveToFavorites);
+            $("#contentArea").append(favoritesButton);
+
+            currentAuthor = data[0].author;
+            currentTitle = data[0].title;
 
         })
         .catch(function (error) {
