@@ -7,7 +7,7 @@ const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
 const contentArea = $("#contentArea");
-const favorites = $("#favorite-items");
+const favorites = $("#fav-boxes");
 
 // This variable is used in the author list button
 let authorsApi = 'https://poetrydb.org/author'
@@ -22,7 +22,8 @@ let currentTitle = "";
 let currentAuthor = "";
 let favoriteList = [];
 let viewedHistory = [];
-
+let untrimmedFavTitle = "";
+let untrimmedFavAuthor = "";
 
 // -------------- Author List -----------------
 
@@ -82,33 +83,49 @@ function onClick() {
     loadPoem(currentPoemSearch);
 }
 
+// function loadFavoritePoem() {
+//     untrimmedFavTitle = $(this).data('title')
+//     untrimmedFavAuthor = $(this).data('author')
+//     console.log(untrimmedFavAuthor);
+//     console.log(untrimmedFavTitle);
+
+//     let trimmedFavTitle = untrimmedFavTitle.split(" ").join("%20");
+//     let trimmedFavAuthor = untrimmedFavAuthor.split(" ").join("%20");
+
+//     let clickedFavorite = "https://poetrydb.org/author,title/" + trimmedFavAuthor + ";" + trimmedFavTitle
+
+//     console.log(clickedFavorite);
+// }
+
 // Used for favorites button generation
 function saveToFavorites() {
 
-    if (favoriteList.length > 8) {
-        favoriteList.shift();
+    if (favoriteList.length > 10) {
+        favoriteList.pop();
     }
 
-    let favorited = currentTitle + " by " + currentAuthor;
-    favoriteList.push(favorited);
+    let favorited = [currentTitle, currentAuthor]
+    favoriteList.unshift(favorited);
     console.log(favoriteList);
     storeFavorite();
     loadFavorites();
 }
 
-function storeFavorite(list) {
+function storeFavorite() {
     localStorage.setItem("favorites", JSON.stringify(favoriteList));
 }
 
 function loadFavorites() {
     favorites.empty();
-
     favoriteList = JSON.parse(localStorage.getItem("favorites"));
 
-
-    // for (let i = 0; i < storedFavorites.length; i++) {
-
-    // }
+    for (let i = 0; i < favoriteList.length; i++) {
+        let favoritesItem = $('<p class="favoritesItem"></p>').text('"'+ favoriteList[i][0] + '"' + ' by ' + favoriteList[i][1])
+        $(favoritesItem).data('title', favoriteList[i][0])
+        $(favoritesItem).data('author', favoriteList[i][1])
+        // $(favoritesItem).on("click", loadFavoritePoem());
+        $("#favorite-items").append(favoritesItem);
+    }
 }
 
 // authorSearch is an api call and is the most complex of the api calls
@@ -140,11 +157,11 @@ function authorSearch(url) {
                 $("#contentArea").append(currentTitle);
               }
         })
-        .catch(function (error) {
-            let notFound = document.createElement("p");
-            notFound.innerHTML = "Author not found";
-            $("#contentArea").append(notFound);
-            console.log(error);
+        .catch(function () {
+            let splitting = url.split("/");
+            console.log(splitting);
+            let titleUrl = splitting[4];
+            loadPoem("https://poetrydb.org/title/" + titleUrl);
         })
 }
 
@@ -218,7 +235,7 @@ function loadPoem(url) {
         })
         .catch(function (error) {
             let notFound = document.createElement("p");
-            notFound.innerHTML = "Poem not found";
+            notFound.innerHTML = "Poetry not found";
             $("#contentArea").append(notFound);
             console.log(error);
         })
@@ -244,6 +261,8 @@ function wikiApiCall(url) {
         })
 
 }
+
+loadFavorites();
 
 // For opensearch api:
 // https://www.mediawiki.org/wiki/API:Opensearch
