@@ -212,13 +212,16 @@ function loadPoem(url) {
                 $("#contentArea").append(poemLine);
               }
 
+            let contentButtons = $('<div id="contentButtons" class="container-fluid text-center"></div>')
+            $("#contentArea").append(contentButtons);
+
             wikiApiCall(wikiUrl);
 
             // favorites / history
 
-            let favoritesButton = $('<button class="favoritesButton col-12 text-center"></button>').text("Add to Favorites!")
+            let favoritesButton = $('<button class="favoritesButton row-4 text-center"></button>').text("Add to Favorites!")
             $(favoritesButton).on("click", saveToFavorites);
-            $("#contentArea").append(favoritesButton);
+            $("#contentButtons").append(favoritesButton);
 
             currentAuthor = data[0].author;
             currentTitle = data[0].title;
@@ -245,8 +248,8 @@ function wikiApiCall(url) {
          })
         .then(function (data) {
 
-            let wikiLink = $('<a href="" class="col-12 text-center wikiLink" target="_blank"</a>').text("Click for more info on this Author");
-            $("#contentArea").append(wikiLink);
+            let wikiLink = $('<a href="" class="row-4 text-center wikiLink" target="_blank"</a>').text("Click for more info on this Author");
+            $("#contentButtons").append(wikiLink);
             $(wikiLink).attr("href", data[3][0]);
         })
 
