@@ -17,7 +17,7 @@ let userInput = "";
 let clickableClicked = "";
 let wikiButton = "";
 
-// Used for favorites button
+// Used for favorites button and favorites list
 let currentTitle = "";
 let currentAuthor = "";
 let favoriteList = [];
@@ -83,21 +83,8 @@ function onClick() {
     loadPoem(currentPoemSearch);
 }
 
-// function loadFavoritePoem() {
-//     untrimmedFavTitle = $(this).data('title')
-//     untrimmedFavAuthor = $(this).data('author')
-//     console.log(untrimmedFavAuthor);
-//     console.log(untrimmedFavTitle);
-
-//     let trimmedFavTitle = untrimmedFavTitle.split(" ").join("%20");
-//     let trimmedFavAuthor = untrimmedFavAuthor.split(" ").join("%20");
-
-//     let clickedFavorite = "https://poetrydb.org/author,title/" + trimmedFavAuthor + ";" + trimmedFavTitle
-
-//     console.log(clickedFavorite);
-// }
-
-// Used for favorites button generation
+// saveToFavorites happens when you click the favorite button
+// It adds the current poem title and name to the first slot in the favoited array, then stores it to local storage and loads local storage
 function saveToFavorites() {
 
     let favorited = [currentTitle, currentAuthor]
@@ -108,10 +95,14 @@ function saveToFavorites() {
     loadFavorites();
 }
 
+// Stores current value of favoriteList to local storage
 function storeFavorite() {
     localStorage.setItem("favorites", JSON.stringify(favoriteList));
 }
 
+// Empties the favorites list section on the html, loads the stored favorite list
+// Then generates an item for each item in the favoriteList array oh the favorites section of the page
+// The favorite list has a maximum of 10 favorites
 function loadFavorites() {
     favorites.empty();
     favoriteList = JSON.parse(localStorage.getItem("favorites"));
@@ -124,17 +115,16 @@ function loadFavorites() {
         let favoritesItem = $('<p class="favoritesItem"></p>').text('"'+ favoriteList[i][0] + '"' + ' by ' + favoriteList[i][1])
         $(favoritesItem).data('title', favoriteList[i][0])
         $(favoritesItem).data('author', favoriteList[i][1])
-        // $(favoritesItem).on("click", loadFavoritePoem());
         $("#favorite-items").append(favoritesItem);
     }
 }
 
 // authorSearch is an api call and is the most complex of the api calls
-// it has a throw and catch is the searched author is not found
 // First for loop fills up authorTitles with the title of each work the searched author has created
 // Second for loop then cycles through each title, creates a p element, sets its text content to the title in the current index ->
 // <- set class to poemTitle, and adds an event listener to each created element that performs the function onClick when clicked
 // each title is also appended to the content area
+// If an author is not found, the throw and catch runs a different api search to see if the entered item is the title of a work
 function authorSearch(url) {
 
     fetch(url)
