@@ -7,7 +7,7 @@ const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
 const contentArea = $("#contentArea");
-const favorites = $("#fav-boxes");
+const favorites = $("#favorite-items");
 
 // This variable is used in the author list button
 let authorsApi = 'https://poetrydb.org/author'
@@ -100,11 +100,8 @@ function onClick() {
 // Used for favorites button generation
 function saveToFavorites() {
 
-    if (favoriteList.length > 10) {
-        favoriteList.pop();
-    }
-
     let favorited = [currentTitle, currentAuthor]
+
     favoriteList.unshift(favorited);
     console.log(favoriteList);
     storeFavorite();
@@ -118,6 +115,10 @@ function storeFavorite() {
 function loadFavorites() {
     favorites.empty();
     favoriteList = JSON.parse(localStorage.getItem("favorites"));
+
+    for ( i = 10; favoriteList.length > i;) {
+        favoriteList.pop();
+    }
 
     for (let i = 0; i < favoriteList.length; i++) {
         let favoritesItem = $('<p class="favoritesItem"></p>').text('"'+ favoriteList[i][0] + '"' + ' by ' + favoriteList[i][1])
