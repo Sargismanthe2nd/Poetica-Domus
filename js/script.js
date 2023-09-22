@@ -7,6 +7,7 @@ const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
 const contentArea = $("#contentArea");
+const favorites = $("#favorite-items");
 
 // This variable is used in the author list button
 let authorsApi = 'https://poetrydb.org/author'
@@ -16,6 +17,13 @@ let userInput = "";
 let clickableClicked = "";
 let wikiButton = "";
 
+// Used for favorites button
+let currentTitle = "";
+let currentAuthor = "";
+let favoriteList = [];
+let viewedHistory = [];
+let untrimmedFavTitle = "";
+let untrimmedFavAuthor = "";
 
 // -------------- Author List -----------------
 
@@ -75,6 +83,52 @@ function onClick() {
     loadPoem(currentPoemSearch);
 }
 
+// function loadFavoritePoem() {
+//     untrimmedFavTitle = $(this).data('title')
+//     untrimmedFavAuthor = $(this).data('author')
+//     console.log(untrimmedFavAuthor);
+//     console.log(untrimmedFavTitle);
+
+//     let trimmedFavTitle = untrimmedFavTitle.split(" ").join("%20");
+//     let trimmedFavAuthor = untrimmedFavAuthor.split(" ").join("%20");
+
+//     let clickedFavorite = "https://poetrydb.org/author,title/" + trimmedFavAuthor + ";" + trimmedFavTitle
+
+//     console.log(clickedFavorite);
+// }
+
+// Used for favorites button generation
+function saveToFavorites() {
+
+    let favorited = [currentTitle, currentAuthor]
+
+    favoriteList.unshift(favorited);
+    console.log(favoriteList);
+    storeFavorite();
+    loadFavorites();
+}
+
+function storeFavorite() {
+    localStorage.setItem("favorites", JSON.stringify(favoriteList));
+}
+
+function loadFavorites() {
+    favorites.empty();
+    favoriteList = JSON.parse(localStorage.getItem("favorites"));
+
+    for ( i = 10; favoriteList.length > i;) {
+        favoriteList.pop();
+    }
+
+    for (let i = 0; i < favoriteList.length; i++) {
+        let favoritesItem = $('<p class="favoritesItem"></p>').text('"'+ favoriteList[i][0] + '"' + ' by ' + favoriteList[i][1])
+        $(favoritesItem).data('title', favoriteList[i][0])
+        $(favoritesItem).data('author', favoriteList[i][1])
+        // $(favoritesItem).on("click", loadFavoritePoem());
+        $("#favorite-items").append(favoritesItem);
+    }
+}
+
 // authorSearch is an api call and is the most complex of the api calls
 // it has a throw and catch is the searched author is not found
 // First for loop fills up authorTitles with the title of each work the searched author has created
@@ -104,11 +158,11 @@ function authorSearch(url) {
                 $("#contentArea").append(currentTitle);
               }
         })
-        .catch(function (error) {
-            let notFound = document.createElement("p");
-            notFound.innerHTML = "Author not found";
-            $("#contentArea").append(notFound);
-            console.log(error);
+        .catch(function () {
+            let splitting = url.split("/");
+            console.log(splitting);
+            let titleUrl = splitting[4];
+            loadPoem("https://poetrydb.org/title/" + titleUrl);
         })
 }
 
@@ -127,7 +181,6 @@ $(searchButton).on("click", function(event) {
 })
 // CREDIT: solution for replacing blank spaces using split and join: https://www.geeksforgeeks.org/how-to-remove-spaces-from-a-string-using-javascript/
 // CREDIT: solution to replacing spaces with a specific string: http://dotnet-concept.com/Tips/2015/3/5798821/How-to-replace-Space-with-Dash-or-Underscore-in-JQuery
-
 
 // --------------------- Click on a Generated Poem Title from the Search Function to Load that Poem----------------------------
 
@@ -171,10 +224,19 @@ function loadPoem(url) {
 
             wikiApiCall(wikiUrl);
 
+            // favorites / history
+
+            let favoritesButton = $('<button class="favoritesButton"></button>').text("Add to Favorites!")
+            $(favoritesButton).on("click", saveToFavorites);
+            $("#contentArea").append(favoritesButton);
+
+            currentAuthor = data[0].author;
+            currentTitle = data[0].title;
+
         })
         .catch(function (error) {
             let notFound = document.createElement("p");
-            notFound.innerHTML = "Poem not found";
+            notFound.innerHTML = "Poetry not found";
             $("#contentArea").append(notFound);
             console.log(error);
         })
@@ -200,6 +262,8 @@ function wikiApiCall(url) {
         })
 
 }
+
+loadFavorites();
 
 // For opensearch api:
 // https://www.mediawiki.org/wiki/API:Opensearch
