@@ -46,11 +46,17 @@ function getAuthorList(url) {
             let authorName = data.authors;
             let currentName ;
 
+            let authorListContainer = $('<div class="container-fluid authorListContainer"></div>')
+            $("#contentArea").append(authorListContainer);
+
+            let rowDisplay = $('<div class="row"></div>')
+            $(authorListContainer).append(rowDisplay);
+
             for (let i = 0; i < authorName.length; i++) {
                 currentName = document.createElement("p");
                 currentName.textContent = authorName[i];
-                $(currentName).addClass("poetListName");
-                $("#contentArea").append(currentName);
+                $(currentName).addClass("poetListName col-md-3");
+                $(rowDisplay).append(currentName);
               }
         })
 }
@@ -135,6 +141,10 @@ function authorSearch(url) {
             let authorTitles = [];
 
             if (data.status == 404) throw "Author not found";
+            let authorWorksMessage = document.createElement("h3");
+            authorWorksMessage.textContent = "Works by " + data[0].author;
+                $(authorWorksMessage).addClass("authorWorksMessage");
+                $("#contentArea").append(authorWorksMessage);
 
             for (let i = 0; i < data.length; i++) {
                 authorTitles.push(data[i].title);
@@ -143,7 +153,7 @@ function authorSearch(url) {
             for (let i = 0; i < data.length; i++) {
                 currentTitle = document.createElement("p");
                 currentTitle.textContent = authorTitles[i];
-                $(currentTitle).addClass("poemTitle");
+                $(currentTitle).addClass("poemTitle col-12");
                 $(currentTitle).on("click", onClick);
                 $("#contentArea").append(currentTitle);
               }
@@ -202,7 +212,7 @@ function loadPoem(url) {
             $(contentTitle).addClass("contentTitle");
             $("#contentArea").append(contentTitle);
 
-            let contentAuthor = $("<h5></h5>").text(data[0].author)
+            let contentAuthor = $("<h5></h5>").text("by " + data[0].author)
             $(contentAuthor).addClass("contentAuthor");
             $("#contentArea").append(contentAuthor);
 
