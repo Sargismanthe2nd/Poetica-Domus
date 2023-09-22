@@ -107,7 +107,7 @@ function loadFavorites() {
     favorites.empty();
     favoriteList = JSON.parse(localStorage.getItem("favorites"));
 
-    for ( i = 6; favoriteList.length > i;) {
+    for ( i = 12; favoriteList.length > i;) {
         favoriteList.pop();
     }
 
@@ -216,7 +216,7 @@ function loadPoem(url) {
 
             // favorites / history
 
-            let favoritesButton = $('<button class="favoritesButton"></button>').text("Add to Favorites!")
+            let favoritesButton = $('<button class="favoritesButton col-12 text-center"></button>').text("Add to Favorites!")
             $(favoritesButton).on("click", saveToFavorites);
             $("#contentArea").append(favoritesButton);
 
@@ -245,8 +245,7 @@ function wikiApiCall(url) {
          })
         .then(function (data) {
 
-            let wikiLink = $('<a href="" target="_blank"</a>').text("Click for more info on this Author")
-            $(wikiLink).addClass("wikiLink");
+            let wikiLink = $('<a href="" class="col-12 text-center wikiLink" target="_blank"</a>').text("Click for more info on this Author");
             $("#contentArea").append(wikiLink);
             $(wikiLink).attr("href", data[3][0]);
         })

@@ -13,38 +13,38 @@
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
 
-        <div class="row">
-
-            <nav class="navbar">
-                <div class="navbar-brand">
+            <nav class="navbar row">
+                <div class="navbar-brand col-md-2">
                     <img src="./img/poet.png" id="logo">
                 </div>
-                <div class="navbar-search">
-                    <input id="input" type="text" placeholder="Author Search">
-                    <button id="search" type="submit">Search</button>
-                    <button id="generateAuthorList" type="submit">Author List</button>
+                <div class="textblurb col-md-4">
+                    <h3>Welcome to Poetica Domus!</h3>
+                    <p class="text-center">Here you can search for poets or their works</p>
+                </div>
+                <div class="navbar-search col-md-6 row text-center">
+                    <input id="input" class="col-md-4 text-center" type="text" placeholder="Looking for...">
+                    <button id="search" class="col-md-2 text-center" type="submit">Search</button>
+                    <button id="generateAuthorList" class="col-md-2 text-center" type="submit">Authors</button>
                 </div>
             </nav>
-
-        </div>
     </div>
 
-    <div class="container">
+
+    <div class="container-fluid">
 
         <div class="row">
 
             <div class="favorites col-4">
-                <h2> Favorites </h2>
+                <h3> Favorites </h3>
                 <div id="favorite-items" class="col">
                 </div>
                 <button id="emptyFavorites">Empty Favorites</button>
             </div>
 
             <div class="poetry-container col-8">
-                <h1>Poetry</h1>
-                <div id="contentArea" class="poetry-box">
+                <div id="contentArea" class="poetry-box container-fluid">
 
                 </div>
             </div>

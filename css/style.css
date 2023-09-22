@@ -4,12 +4,34 @@
 }
 
 #logo {
-    width: 20px;
-    height: 20px;
+    width: 150px;
+    height: auto;
+    padding: 4px 4px 4px 20px;
 }
 
 h2 {
     text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+.textblurb {
+    color: white;
+}
+
+.navbar {
+    background-color: rgb(85, 12, 12);
+}
+
+.navbar-search {
+    justify-content: center;
+}
+
+.poetry-container {
+    background-color: orange;
+    padding: 30px 50px 30px 50px;
 }
 
 /* ------------------- JS RELATED CLASSES AND IDS ------------------- */
@@ -46,22 +68,29 @@ h2 {
 
 /* title loaded to content area when a poem is selected */
 .contentTitle {
-
+    text-align: center;
+    font-size: 3em;
 }
 
 /* author loaded to content area when a poem is selected */
 .contentAuthor {
-
+    text-align: center;
+    font-size: 1.5em;
+    font-style: italic;
+    padding: 0px 0px 10px 0px;
+    border-bottom: 5px solid rgb(197, 185, 185);
 }
 
 /* poem lines loaded to content area when a poem is selected */
 .poemLine {
-
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 30px;
 }
 
 /* link to wikipedia article that is generated at the bottom of the page */
 .wikiLink {
-
+    justify-content: center;
 }
 
 /* style for each item on the favorites list */
@@ -69,6 +98,14 @@ h2 {
     padding: 10px;
     text-align: center;
     background-color: green;
+}
+
+.favoritesButton {
+    justify-content: center;
+}
+
+#emptyFavorites {
+    justify-content: center;
 }
 
 /* On Hover */
