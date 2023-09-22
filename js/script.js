@@ -7,6 +7,7 @@ const searchText = $("#input");
 const searchButton = $("#search");
 const generateAuthorList = $("#generateAuthorList");
 const contentArea = $("#contentArea");
+const favorites = $("#favorite-items");
 
 // This variable is used in the author list button
 let authorsApi = 'https://poetrydb.org/author'
@@ -83,19 +84,32 @@ function onClick() {
 
 // Used for favorites button generation
 function saveToFavorites() {
-    let favorited = $("<p></p>").text(currentTitle + " by " + currentAuthor)
-    $(favorited).addClass("favoriteItem");
-    $("#favorite-items").append(favorited);
+
+    if (favoriteList.length > 8) {
+        favoriteList.shift();
+    }
+
+    let favorited = currentTitle + " by " + currentAuthor;
     favoriteList.push(favorited);
-    storeFavorite(favoriteList);
+    console.log(favoriteList);
+    storeFavorite();
     loadFavorites();
 }
 
 function storeFavorite(list) {
-    localStorage.setItem("favorites", JSON.stringify(list));
+    localStorage.setItem("favorites", JSON.stringify(favoriteList));
 }
 
-function loadFavorites();
+function loadFavorites() {
+    favorites.empty();
+
+    favoriteList = JSON.parse(localStorage.getItem("favorites"));
+
+
+    // for (let i = 0; i < storedFavorites.length; i++) {
+
+    // }
+}
 
 // authorSearch is an api call and is the most complex of the api calls
 // it has a throw and catch is the searched author is not found
