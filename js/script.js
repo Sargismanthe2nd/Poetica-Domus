@@ -102,17 +102,17 @@ function storeFavorite() {
 
 // Empties the favorites list section on the html, loads the stored favorite list
 // Then generates an item for each item in the favoriteList array oh the favorites section of the page
-// The favorite list has a maximum of 10 favorites
+// The favorite list has a maximum of 6 favorites
 function loadFavorites() {
     favorites.empty();
     favoriteList = JSON.parse(localStorage.getItem("favorites"));
 
-    for ( i = 10; favoriteList.length > i;) {
+    for ( i = 6; favoriteList.length > i;) {
         favoriteList.pop();
     }
 
     for (let i = 0; i < favoriteList.length; i++) {
-        let favoritesItem = $('<p class="favoritesItem"></p>').text('"'+ favoriteList[i][0] + '"' + ' by ' + favoriteList[i][1])
+        let favoritesItem = $('<p class="favoritesItem col-md-12"></p>').text('"'+ favoriteList[i][0] + '"' + ' by ' + favoriteList[i][1])
         $(favoritesItem).data('title', favoriteList[i][0])
         $(favoritesItem).data('author', favoriteList[i][1])
         $("#favorite-items").append(favoritesItem);
